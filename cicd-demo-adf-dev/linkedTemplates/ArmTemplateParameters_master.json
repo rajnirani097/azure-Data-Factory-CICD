@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "cicd-demo-adf-dev"
 		},
+		"ls_cicddemodl_managed_identity_properties_typeProperties_url": {
+			"value": "https://devcicddemo4dl.dfs.core.windows.net/"
+		},
 		"containerUri": {
 			"value": ""
 		},
