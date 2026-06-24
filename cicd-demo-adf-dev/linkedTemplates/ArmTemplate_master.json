@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "cicd-demo-adf-dev"
 		},
+		"ls_ kv_dev_cicd_demo_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-dev-cicd-demo.vault.azure.net/"
+		},
+		"ls_cicddemodl_access_keys_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://devcicddemo4dl.dfs.core.windows.net/"
+		},
 		"ls_cicddemodl_managed_identity_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://devcicddemo4dl.dfs.core.windows.net/"
@@ -38,8 +46,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_ kv_dev_cicd_demo_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_ kv_dev_cicd_demo_properties_typeProperties_baseUrl')]"
+					},
 					"ls_cicddemodl_managed_identity_properties_typeProperties_url": {
 						"value": "[parameters('ls_cicddemodl_managed_identity_properties_typeProperties_url')]"
+					},
+					"ls_cicddemodl_access_keys_properties_typeProperties_url": {
+						"value": "[parameters('ls_cicddemodl_access_keys_properties_typeProperties_url')]"
 					}
 				}
 			},
