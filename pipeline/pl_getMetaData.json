@@ -51,7 +51,7 @@
 						"value": "@activity('Get File And Move').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": false
+					"isSequential": true
 				}
 			}
 		],
