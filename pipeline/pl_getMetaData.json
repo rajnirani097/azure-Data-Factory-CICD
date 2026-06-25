@@ -1,0 +1,63 @@
+{
+	"name": "pl_getMetaData",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get File And Move",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": ""
+					}
+				],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_get_fileNames",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "fileNames",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get File And Move",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get File And Move').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": false
+				}
+			}
+		],
+		"folder": {
+			"name": "adf_project"
+		},
+		"annotations": []
+	}
+}
