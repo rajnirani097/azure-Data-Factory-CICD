@@ -1,0 +1,98 @@
+{
+	"name": "ErrorRowHandle",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_error_rows_data_source",
+						"type": "DatasetReference"
+					},
+					"name": "GetMetaData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_bad_rows",
+						"type": "DatasetReference"
+					},
+					"name": "Sink"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_sql_correct_records",
+						"type": "DatasetReference"
+					},
+					"name": "SinkForCorrectRecods"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectSourceData"
+				},
+				{
+					"name": "BadRowSplit"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          saleDate as string,",
+				"          salesItem as string,",
+				"          country as string,",
+				"          quantity as string,",
+				"          fileName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> GetMetaData",
+				"GetMetaData select(mapColumn(",
+				"          saleDate,",
+				"          salesItem,",
+				"          country,",
+				"          quantity,",
+				"          fileName",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectSourceData",
+				"SelectSourceData split(isNull(toDate(saleDate, 'yyyy-MM-dd')),",
+				"     disjoint: false) ~> BadRowSplit@(ErrorRows, CorrectRows)",
+				"BadRowSplit@ErrorRows sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          saleDate as string,",
+				"          salesItem as string,",
+				"          country as string,",
+				"          quantity as string,",
+				"          fileName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> Sink",
+				"BadRowSplit@CorrectRows sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          saleDate as string,",
+				"          salesItem as string,",
+				"          country as string,",
+				"          quantity as string,",
+				"          fileName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> SinkForCorrectRecods"
+			]
+		}
+	}
+}
