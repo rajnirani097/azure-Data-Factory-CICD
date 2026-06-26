@@ -114,7 +114,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "df_move_file_target",
+									"referenceName": "ds_move_file_target",
 									"type": "DatasetReference"
 								}
 							]

@@ -1,5 +1,5 @@
 {
-	"name": "df_move_file_target",
+	"name": "ds_move_file_target",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_connect",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "archieve",
+				"folderPath": "archeive",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
