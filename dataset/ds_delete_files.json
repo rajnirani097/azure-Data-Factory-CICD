@@ -19,6 +19,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
+				"folderPath": "dim_country",
 				"fileSystem": "lookup"
 			},
 			"columnDelimiter": ",",
