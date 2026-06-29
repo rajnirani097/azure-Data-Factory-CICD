@@ -29,7 +29,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadingFile",
-				"ReadingFile derive(fixed_length = substring(country, 0, 1)) ~> derivedColumn1"
+				"ReadingFile derive(fixed_length = substring(country, 0, 2)) ~> derivedColumn1"
 			]
 		}
 	}
