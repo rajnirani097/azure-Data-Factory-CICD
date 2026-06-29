@@ -1,0 +1,36 @@
+{
+	"name": "df_fixed_length",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_error_rows_data_source",
+						"type": "DatasetReference"
+					},
+					"name": "ReadingFile"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          saleDate as string,",
+				"          salesItem as string,",
+				"          country as string,",
+				"          quantity as string,",
+				"          fileName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadingFile",
+				"ReadingFile derive(fixed_length = substring(country, 0, 1)) ~> derivedColumn1"
+			]
+		}
+	}
+}
