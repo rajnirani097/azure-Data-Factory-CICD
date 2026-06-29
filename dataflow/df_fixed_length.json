@@ -12,7 +12,15 @@
 					"name": "ReadingFile"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_move_file_target",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDerivedColumn"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
@@ -29,7 +37,14 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadingFile",
-				"ReadingFile derive(fixed_length = substring(country, 0, 2)) ~> derivedColumn1"
+				"ReadingFile derive(country_code = substring(country, 0, 2)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkDerivedColumn"
 			]
 		}
 	}
